@@ -25,11 +25,11 @@
             ],
             "styles": [
               "src/styles.css",
-              "src/vendor/bootstrap-5.0.1-dist/bootstrap.min.css"
+              "vendor/bootstrap-5.0.1-dist/bootstrap.min.css"
             ],
             "scripts": [
-              "src/vendor/jquery-3.6.0-dist/jquery-3.6.0.min.js",
-              "src/vendor/bootstrap-5.0.1-dist/bootstrap.bundle.min.js"
+              "vendor/jquery-3.6.0-dist/jquery-3.6.0.min.js",
+              "vendor/bootstrap-5.0.1-dist/bootstrap.bundle.min.js"
             ]
           },
           "configurations": {
@@ -92,11 +92,11 @@
             ],
             "styles": [
               "src/styles.css",
-              "src/vendor/bootstrap-5.0.1-dist/bootstrap.min.css"
+              "vendor/bootstrap-5.0.1-dist/bootstrap.min.css"
             ],
             "scripts": [
-              "src/vendor/jquery-3.6.0-dist/jquery-3.6.0.min.js",
-              "src/vendor/bootstrap-5.0.1-dist/bootstrap.bundle.min.js"
+              "vendor/jquery-3.6.0-dist/jquery-3.6.0.min.js",
+              "vendor/bootstrap-5.0.1-dist/bootstrap.bundle.min.js"
             ]
           }
         },

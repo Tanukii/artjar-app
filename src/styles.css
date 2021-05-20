@@ -1,1 +1,6 @@
 /* You can add global styles to this file, and also import other style files */
+
+.card-95{
+    min-height:95% !important;
+    min-width: 95% !important;
+}

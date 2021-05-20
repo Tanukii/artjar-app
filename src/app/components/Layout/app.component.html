@@ -1,4 +1,28 @@
-<div class="container-fluid bg-dark min-vh-100">
-  henlo
+<div class="container-fluid bg-dark bg-gradient min-vh-100">
+  <!-- CONTENEDOR PARA MOVILES -->
+  <div class="d-sm-block d-md-none">
+    <div class="card">
+      <div class="card-body">
+        <p class="card-text">Solo Pantallas Moviles</p>
+      </div>
+    </div>
+  </div>
+  <!-- Contenedor para desktop -->
+  <div class="d-none d-md-block">
+    <div class="row">
+      <div class="col-2 min-vh-100 bg-dark">
+        <span class="h1 text-light">ArtJar</span>
+        <div class="list-group">
+          <a [routerLink]="['/LoginRegistro']" routerLinkActive="router-link-active" class="list-group-item list-group-item-action">Login/Registro</a>
+          <a href="#" class="list-group-item list-group-item-action">A second link item</a>
+          <a href="#" class="list-group-item list-group-item-action">A third link item</a>
+          <a href="#" class="list-group-item list-group-item-action">A fourth link item</a>
+          <a href="#" class="list-group-item list-group-item-action disabled" tabindex="-1" aria-disabled="true">A disabled link item</a>
+        </div>
+      </div>
+      <div class="col-10">
+        <router-outlet></router-outlet>
+      </div>
+    </div>
+  </div>
 </div>
-<router-outlet></router-outlet>
