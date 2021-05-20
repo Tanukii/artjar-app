@@ -24,9 +24,13 @@
               "src/assets"
             ],
             "styles": [
-              "src/styles.css"
+              "src/styles.css",
+              "src/vendor/bootstrap-5.0.1-dist/bootstrap.min.css"
             ],
-            "scripts": []
+            "scripts": [
+              "src/vendor/jquery-3.6.0-dist/jquery-3.6.0.min.js",
+              "src/vendor/bootstrap-5.0.1-dist/bootstrap.bundle.min.js"
+            ]
           },
           "configurations": {
             "production": {
@@ -87,9 +91,13 @@
               "src/assets"
             ],
             "styles": [
-              "src/styles.css"
+              "src/styles.css",
+              "src/vendor/bootstrap-5.0.1-dist/bootstrap.min.css"
             ],
-            "scripts": []
+            "scripts": [
+              "src/vendor/jquery-3.6.0-dist/jquery-3.6.0.min.js",
+              "src/vendor/bootstrap-5.0.1-dist/bootstrap.bundle.min.js"
+            ]
           }
         },
         "lint": {
