@@ -1,7 +1,157 @@
 <div class="w-100 h-100 d-flex align-items-center justify-content-center">
     <div class="card card-95">
         <div class="card-body">
-            
+            <div class="container">
+                <div class="row">
+                    <div class="col">
+                        <!-- Botones LogIn/Registro -->
+                        <div class="accordion" id="accordionExample">
+                            <div class="accordion-item">
+                                <h2 class="accordion-header" id="headingOne">
+                                    <button class="accordion-button" type="button" data-bs-toggle="collapse"
+                                        data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                                        LogIn
+                                    </button>
+                                </h2>
+                                <div id="collapseOne" class="accordion-collapse collapse show"
+                                    aria-labelledby="headingOne" data-bs-parent="#accordionExample">
+                                    <div class="accordion-body">
+                                        <!-- INICIO FORMULARIO LogIn -->
+                                        <form [formGroup]="formLogin" (ngSubmit)="logear()">
+                                            <div class="form-row d-flex justify-content-center my-2">
+                                                <div class="form-group col-6">
+                                                    <label for="nickname">
+                                                        <strong>
+                                                            Usuario
+                                                        </strong>
+                                                    </label>
+                                                    <input 
+                                                        type="text"
+                                                        formControlName="nickname"
+                                                        class="form-control"
+                                                        id="nickname"
+                                                        placeholder="escribe aqui tu nick...">
+                                                    <span
+                                                        class="text-danger"
+                                                        *ngIf="! miform.controls['nick'].pristine &&  miform.controls['nick'].errors?.required">
+                                                        el campo es obligatorio
+                                                    </span>
+                                                </div>
+                                            </div>
+
+                                            <div class="form-row d-flex justify-content-center my-2">
+                                                <div class="form-group col-6">
+                                                    <label for="contra">
+                                                        <strong>
+                                                            Contraseña
+                                                        </strong>
+                                                    </label>
+                                                    <input
+                                                        type="password"
+                                                        formControlName="contra"
+                                                        class="form-control"
+                                                        id="contra"
+                                                        placeholder="escribe tu password...">
+                                                </div>
+                                            </div>
+
+                                            <div class="form-row d-flex justify-content-center my-2">
+                                                <button
+                                                    type="submit"
+                                                    class="btn btn-primary"
+                                                    [disabled]="miform.status!=='VALID'">
+                                                        Acceder
+                                                    </button>
+                                            </div>
+                                            
+                                        </form>
+                                        <!-- FIN FORMULARIO LogIn -->
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="accordion-item">
+                                <h2 class="accordion-header" id="headingTwo">
+                                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                                        data-bs-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+                                        Registro
+                                    </button>
+                                </h2>
+                                <div id="collapseTwo" class="accordion-collapse collapse" aria-labelledby="headingTwo"
+                                    data-bs-parent="#accordionExample">
+                                    <div class="accordion-body">
+                                        <!-- INICIO FORMULARIO REGISTRO -->
+                                        <form [formGroup]="miform" (ngSubmit)="guardarCambios()">
+                                            <div class="form-row d-flex justify-content-center my-2">
+                                                <div class="form-group col-6">
+                                                    <label for="nickname">
+                                                        <strong>
+                                                            Usuario
+                                                        </strong>
+                                                    </label>
+                                                    <input
+                                                        type="text"
+                                                        formControlName="nickname"
+                                                        class="form-control"
+                                                        id="nickname"
+                                                        placeholder="escribe aqui tu nick...">
+                                                    <span
+                                                        class="text-danger"
+                                                        *ngIf="! miform.controls['nick'].pristine &&  miform.controls['nick'].errors?.required">
+                                                            el campo es obligatorio
+                                                    </span>
+                                                </div>
+                                            </div>
+
+                                            <div class="form-row d-flex justify-content-center my-2">
+                                                <div class="form-group col-6">
+                                                    <label for="contra">
+                                                        <strong>
+                                                            Contraseña
+                                                        </strong>
+                                                    </label>
+                                                    <input
+                                                        type="password"
+                                                        formControlName="contra"
+                                                        class="form-control"
+                                                        id="contra"
+                                                        placeholder="escribe tu password...">
+                                                </div>
+                                            </div>
+
+                                            <div class="form-row d-flex justify-content-center my-2">
+                                                <div class="form-group col-6">
+                                                    <label for="recontra">
+                                                        <strong>
+                                                            Repita Contraseña
+                                                        </strong>
+                                                    </label>
+                                                    <input
+                                                        type="password"
+                                                        formControlName="recontra"
+                                                        class="form-control"
+                                                        id="recontra"
+                                                        placeholder="escribe tu password...">
+                                                </div>
+                                            </div>
+
+                                            <div class="form-row d-flex justify-content-center my-2">
+                                                <button
+                                                    type="submit"
+                                                    class="btn btn-primary"
+                                                    [disabled]="miform.status!=='VALID'">
+                                                    Registrarme
+                                                </button>
+                                            </div>
+                                            
+                                        </form>
+                                        <!-- FIN FORMULARIO REGISTRO -->
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 </div>
