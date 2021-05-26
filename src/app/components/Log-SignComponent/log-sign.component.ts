@@ -1,6 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, FormArray, Validators, ValidatorFn, AbstractControl, ValidationErrors } from '@angular/forms';
 
+
+// --- Inyeccion de Servicio ---
+import { RegistrarService } from 'src/app/services/http/registrar.service';
 @Component({
   selector: 'app-log-sign',
   templateUrl: './log-sign.component.html',
@@ -12,7 +15,9 @@ export class LogSignComponent implements OnInit {
   public formLogin: FormGroup;
   public formRegistro: FormGroup;
 
-  constructor() {
+  constructor(
+    private _registrar:RegistrarService
+  ) {
     // v --- FORM GROUP LOGIN --- v
     this.formLogin = new FormGroup(
       {
@@ -79,10 +84,21 @@ export class LogSignComponent implements OnInit {
 
 
   // --- Metodo LOGIN ---
+  public nada(){
+    null;
+  }
 
 
   // --- METODO REGISTRO ---
-  
+  public Registrar(){
+    console.log('Ejecutamos funcion');
+    this._registrar.Registrar().subscribe(
+      (data)=>{
+        console.log('Se ejecuta Subscribe')
+        console.log(data);
+      }
+    );
+  }
   
 
 }

@@ -1,11 +1,15 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
-import { bootstrap } from 'bootstrap';
+import { HttpClientModule } from '@angular/common/http';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './components/Layout/app.component';
 import { IndexComponentComponent } from './components/IndexComponent/index-component.component';
 import { LogSignComponent } from './components/Log-SignComponent/log-sign.component';
+
+// --- Servicios a Inyectar ---
+import { RegistrarService } from './services/http/registrar.service';
 
 @NgModule({
   declarations: [
@@ -15,9 +19,12 @@ import { LogSignComponent } from './components/Log-SignComponent/log-sign.compon
   ],
   imports: [
     BrowserModule,
-    AppRoutingModule
+    AppRoutingModule,
+    HttpClientModule,
+    FormsModule,
+    ReactiveFormsModule
   ],
-  providers: [],
+  providers: [ RegistrarService ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

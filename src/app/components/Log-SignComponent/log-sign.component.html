@@ -17,7 +17,7 @@
                                     aria-labelledby="headingOne" data-bs-parent="#accordionExample">
                                     <div class="accordion-body">
                                         <!-- INICIO FORMULARIO LogIn -->
-                                        <form [formGroup]="formLogin" (ngSubmit)="logear()">
+                                        <form [formGroup]="formLogin" (ngSubmit)="nada()">
                                             <div class="form-row d-flex justify-content-center my-2">
                                                 <div class="form-group col-6">
                                                     <label for="nickname">
@@ -33,7 +33,7 @@
                                                         placeholder="escribe aqui tu nick...">
                                                     <span
                                                         class="text-danger"
-                                                        *ngIf="! miform.controls['nick'].pristine &&  miform.controls['nick'].errors?.required">
+                                                        *ngIf="! formLogin.controls['nickname'].pristine &&  formLogin.controls['nickname'].errors?.required">
                                                         el campo es obligatorio
                                                     </span>
                                                 </div>
@@ -59,7 +59,7 @@
                                                 <button
                                                     type="submit"
                                                     class="btn btn-primary"
-                                                    [disabled]="miform.status!=='VALID'">
+                                                    [disabled]="formLogin.status!=='VALID'">
                                                         Acceder
                                                     </button>
                                             </div>
@@ -80,7 +80,7 @@
                                     data-bs-parent="#accordionExample">
                                     <div class="accordion-body">
                                         <!-- INICIO FORMULARIO REGISTRO -->
-                                        <form [formGroup]="miform" (ngSubmit)="guardarCambios()">
+                                        <form [formGroup]="formRegistro" (ngSubmit)="Registrar()">
                                             <div class="form-row d-flex justify-content-center my-2">
                                                 <div class="form-group col-6">
                                                     <label for="nickname">
@@ -96,7 +96,7 @@
                                                         placeholder="escribe aqui tu nick...">
                                                     <span
                                                         class="text-danger"
-                                                        *ngIf="! miform.controls['nick'].pristine &&  miform.controls['nick'].errors?.required">
+                                                        *ngIf="! formRegistro.controls['nickname'].pristine &&  formRegistro.controls['nickname'].errors?.required">
                                                             el campo es obligatorio
                                                     </span>
                                                 </div>
@@ -138,7 +138,7 @@
                                                 <button
                                                     type="submit"
                                                     class="btn btn-primary"
-                                                    [disabled]="miform.status!=='VALID'">
+                                                    [disabled]="formRegistro.status!=='VALID'">
                                                     Registrarme
                                                 </button>
                                             </div>
