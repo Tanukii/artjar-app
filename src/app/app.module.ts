@@ -9,7 +9,7 @@ import { IndexComponentComponent } from './components/IndexComponent/index-compo
 import { LogSignComponent } from './components/Log-SignComponent/log-sign.component';
 
 // --- Servicios a Inyectar ---
-import { RegistrarService } from './services/http/registrar.service';
+import { LogSignService } from './services/http/LogSign.service';
 
 @NgModule({
   declarations: [
@@ -24,7 +24,7 @@ import { RegistrarService } from './services/http/registrar.service';
     FormsModule,
     ReactiveFormsModule
   ],
-  providers: [ RegistrarService ],
+  providers: [ LogSignService ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

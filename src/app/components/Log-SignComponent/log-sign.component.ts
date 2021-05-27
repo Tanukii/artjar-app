@@ -1,9 +1,14 @@
+// --- Importacion de Componentes ---
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, FormArray, Validators, ValidatorFn, AbstractControl, ValidationErrors } from '@angular/forms';
 
 
-// --- Inyeccion de Servicio ---
-import { RegistrarService } from 'src/app/services/http/registrar.service';
+// --- Importacion de Servicios ---
+import { LogSignService } from 'src/app/services/http/LogSign.service';
+
+// --- Importacion de Modelos ---
+import { IUsuario } from 'src/app/models/usuarioModel';
+
 @Component({
   selector: 'app-log-sign',
   templateUrl: './log-sign.component.html',
@@ -16,7 +21,7 @@ export class LogSignComponent implements OnInit {
   public formRegistro: FormGroup;
 
   constructor(
-    private _registrar:RegistrarService
+    private _registrar:LogSignService
   ) {
     // v --- FORM GROUP LOGIN --- v
     this.formLogin = new FormGroup(
@@ -91,8 +96,15 @@ export class LogSignComponent implements OnInit {
 
   // --- METODO REGISTRO ---
   public Registrar(){
-    console.log('Ejecutamos funcion');
-    this._registrar.Registrar().subscribe(
+    // --- Parseo del Form a Objeto ---
+    let _vForm = this.formRegistro.value;
+    
+    let _usuarioObject: IUsuario={
+      nickname: _vForm.nickname,
+      password: _vForm.contra
+    };
+    
+    this._registrar.Registrar(_usuarioObject).subscribe(
       (data)=>{
         console.log('Se ejecuta Subscribe')
         console.log(data);
