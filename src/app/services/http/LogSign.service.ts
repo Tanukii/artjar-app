@@ -17,7 +17,17 @@ export class LogSignService {
     private _http:HttpClient
   ) { }
 
+  // --- METODOS DEL SERVICIO ---
+
+  // - Metodo de Registro -
   public Registrar(_newUser:IUsuario): Observable<any>{
     return this._http.post('http://localhost:3000/api/Registro',_newUser);
   }
+
+  // - Metodo Check Nickname en uso -
+  public CheckNickname(_nick:String): Observable<any>{
+    return this._http.get(`http://localhost:3000/api/CheckNickname/${_nick}`,{observe:'response'});
+  }
+
+  // - Metodo LogIn -
 }

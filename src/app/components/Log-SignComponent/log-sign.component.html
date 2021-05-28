@@ -25,14 +25,9 @@
                                                             Usuario
                                                         </strong>
                                                     </label>
-                                                    <input 
-                                                        type="text"
-                                                        formControlName="nickname"
-                                                        class="form-control"
-                                                        id="nickname"
-                                                        placeholder="escribe aqui tu nick...">
-                                                    <span
-                                                        class="text-danger"
+                                                    <input type="text" formControlName="nickname" class="form-control"
+                                                        id="nickname" placeholder="escribe aqui tu nick...">
+                                                    <span class="text-danger"
                                                         *ngIf="! formLogin.controls['nickname'].pristine &&  formLogin.controls['nickname'].errors?.required">
                                                         el campo es obligatorio
                                                     </span>
@@ -46,24 +41,18 @@
                                                             Contraseña
                                                         </strong>
                                                     </label>
-                                                    <input
-                                                        type="password"
-                                                        formControlName="contra"
-                                                        class="form-control"
-                                                        id="contra"
-                                                        placeholder="escribe tu password...">
+                                                    <input type="password" formControlName="contra" class="form-control"
+                                                        id="contra" placeholder="escribe tu password...">
                                                 </div>
                                             </div>
 
                                             <div class="form-row d-flex justify-content-center my-2">
-                                                <button
-                                                    type="submit"
-                                                    class="btn btn-primary"
+                                                <button type="submit" class="btn btn-primary"
                                                     [disabled]="formLogin.status!=='VALID'">
-                                                        Acceder
-                                                    </button>
+                                                    Acceder
+                                                </button>
                                             </div>
-                                            
+
                                         </form>
                                         <!-- FIN FORMULARIO LogIn -->
                                     </div>
@@ -88,17 +77,27 @@
                                                             Usuario
                                                         </strong>
                                                     </label>
-                                                    <input
-                                                        type="text"
-                                                        formControlName="nickname"
-                                                        class="form-control"
-                                                        id="nickname"
-                                                        placeholder="escribe aqui tu nick...">
-                                                    <span
-                                                        class="text-danger"
-                                                        *ngIf="! formRegistro.controls['nickname'].pristine &&  formRegistro.controls['nickname'].errors?.required">
-                                                            el campo es obligatorio
-                                                    </span>
+
+                                                    <div class="input-group">
+
+                                                        <input type="text" formControlName="nickname"
+                                                            class="form-control" id="nickname"
+                                                            placeholder="escribe aqui tu nick..."
+                                                            (blur)="CheckNickname()">
+                                                        <span class="input-group-text" [innerHtml]="iconHTML"></span>
+                                                    </div>
+
+                                                    <p class="text-danger fw-bold"
+                                                        *ngIf="!formRegistro.controls['nickname'].pristine &&  formRegistro.controls['nickname'].errors?.required">
+                                                        Campo Obligatorio
+                                                    </p>
+                                                    <p class="text-danger fw-bold"
+                                                        *ngIf="!formRegistro.controls['nickname'].pristine && formRegistro.controls['nickname'].errors?.minlength !== null && formRegistro.controls['nickname'].errors?.maxlength !== null">
+                                                        Nickname solo puede ser entre 8 y 12 caracteres
+                                                    </p>
+                                                    <div [innerHtml]="nombreCogido">
+
+                                                    </div>
                                                 </div>
                                             </div>
 
@@ -109,12 +108,14 @@
                                                             Contraseña
                                                         </strong>
                                                     </label>
-                                                    <input
-                                                        type="password"
-                                                        formControlName="contra"
-                                                        class="form-control"
-                                                        id="contra"
-                                                        placeholder="escribe tu password...">
+
+                                                    <input type="password" formControlName="contra" class="form-control"
+                                                        id="contra" placeholder="escribe tu password..." />
+                                                    <span class="text-danger fw-bold"
+                                                        *ngIf="!formRegistro.controls['contra'].pristine &&  formRegistro.controls['contra'].errors?.required">
+                                                        Campo Obligatorio
+                                                    </span>
+
                                                 </div>
                                             </div>
 
@@ -125,24 +126,19 @@
                                                             Repita Contraseña
                                                         </strong>
                                                     </label>
-                                                    <input
-                                                        type="password"
-                                                        formControlName="recontra"
-                                                        class="form-control"
-                                                        id="recontra"
+                                                    <input type="password" formControlName="recontra"
+                                                        class="form-control" id="recontra"
                                                         placeholder="escribe tu password...">
                                                 </div>
                                             </div>
 
                                             <div class="form-row d-flex justify-content-center my-2">
-                                                <button
-                                                    type="submit"
-                                                    class="btn btn-primary"
-                                                    [disabled]="formRegistro.status!=='VALID'">
+                                                <button type="submit" class="btn btn-primary"
+                                                    [disabled]="formRegistro.status!=='VALID' && this.isNicknameUnique==false">
                                                     Registrarme
                                                 </button>
                                             </div>
-                                            
+
                                         </form>
                                         <!-- FIN FORMULARIO REGISTRO -->
                                     </div>

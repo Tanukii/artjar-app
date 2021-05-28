@@ -20,8 +20,16 @@ export class LogSignComponent implements OnInit {
   public formLogin: FormGroup;
   public formRegistro: FormGroup;
 
+  // - Strings de HTML -
+  public iconHTML: string;
+  public nombreCogido: string ="";
+
+  // - Control Username -
+  public isNicknameUnique: boolean = false;
+
+
   constructor(
-    private _registrar:LogSignService
+    private _logSigServ:LogSignService
   ) {
     // v --- FORM GROUP LOGIN --- v
     this.formLogin = new FormGroup(
@@ -59,9 +67,10 @@ export class LogSignComponent implements OnInit {
           Validators.maxLength(12)
         ])
 
-      }, this._testPassword()
+      }, {validators:[this._testPassword()]}
     );
     // ^ --- FORM GROUP REGISTRO --- ^
+    this.iconHTML = "<i class='bi bi-input-cursor-text'></i>";
   }
 
   // --- METODO ON INIT ---
@@ -85,7 +94,48 @@ export class LogSignComponent implements OnInit {
     }
   }
 
+
   // --- METODO TEST NICKNAME ---
+  public CheckNickname(){
+    if(this.formRegistro.value.nickname.length > 7 && this.formRegistro.value.nickname.length < 13){
+      // - Cambiamos icono a spinner, aunque no se vera -
+      this.iconHTML ="<span class='spinner-grow spinner-grow-sm text-info'></span>";
+
+      this._logSigServ.CheckNickname(this.formRegistro.value.nickname).subscribe(
+            (success)=>{
+              if(success.status === 200){
+                this.isNicknameUnique= true;
+                this.nombreCogido ="";
+                this.iconHTML="<i class='bi bi-check-square-fill text-success'></i>";
+              }else{
+                this.isNicknameUnique= false;
+                this.iconHTML="<i class='bi bi-exclamation-triangle-fill text-warning'></i>";
+                this.nombreCogido ="<p class='text-warning fw-bold'>Sucedio un error</p>";
+                console.log(success);
+              }
+            },
+            (err)=>{
+              if(err.status === 400){
+                this.isNicknameUnique= false;
+                this.nombreCogido ="<p class='text-danger fw-bold'>Este nombre ya esta cogido</p>";
+                this.iconHTML="<i class='bi bi-x-square-fill text-danger'></i>";
+              }else{
+                this.isNicknameUnique= false;
+                this.iconHTML="<i class='bi bi-exclamation-triangle-fill text-warning'></i>";
+                this.nombreCogido ="<p class='text-warning fw-bold'>Sucedio un error</p>";
+                console.log(err);
+              }
+              
+            }
+          );
+    }else{
+      this.nombreCogido ="";
+      this.iconHTML="<i class='bi bi-input-cursor-text'></i>";
+    }
+    
+    
+    
+  }
 
 
   // --- Metodo LOGIN ---
@@ -104,9 +154,8 @@ export class LogSignComponent implements OnInit {
       password: _vForm.contra
     };
     
-    this._registrar.Registrar(_usuarioObject).subscribe(
+    this._logSigServ.Registrar(_usuarioObject).subscribe(
       (data)=>{
-        console.log('Se ejecuta Subscribe')
         console.log(data);
       }
     );
