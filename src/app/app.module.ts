@@ -10,12 +10,15 @@ import { LogSignComponent } from './components/Log-SignComponent/log-sign.compon
 
 // --- Servicios a Inyectar ---
 import { LogSignService } from './services/http/LogSign.service';
+import { SessionVarService } from './services/session/session-var.service';
+import { Error404Component } from './components/error404/error404.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     IndexComponentComponent,
-    LogSignComponent
+    LogSignComponent,
+    Error404Component
   ],
   imports: [
     BrowserModule,
@@ -24,7 +27,7 @@ import { LogSignService } from './services/http/LogSign.service';
     FormsModule,
     ReactiveFormsModule
   ],
-  providers: [ LogSignService ],
+  providers: [ LogSignService, SessionVarService ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

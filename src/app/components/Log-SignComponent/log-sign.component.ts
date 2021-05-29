@@ -1,18 +1,19 @@
 // --- Importacion de Componentes ---
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, FormArray, Validators, ValidatorFn, AbstractControl, ValidationErrors } from '@angular/forms';
+import { Router } from '@angular/router';
 
 
 // --- Importacion de Servicios ---
 import { LogSignService } from 'src/app/services/http/LogSign.service';
+import { SessionVarService } from 'src/app/services/session/session-var.service';
 
 // --- Importacion de Modelos ---
 import { IUsuario } from 'src/app/models/usuarioModel';
 
 @Component({
   selector: 'app-log-sign',
-  templateUrl: './log-sign.component.html',
-  styleUrls: ['./log-sign.component.css']
+  templateUrl: './log-sign.component.html'
 })
 export class LogSignComponent implements OnInit {
 
@@ -26,7 +27,9 @@ export class LogSignComponent implements OnInit {
 
 
   constructor(
-    private _logSigServ: LogSignService
+    private _logSigServ: LogSignService,
+    private _tokenStore: SessionVarService,
+    private _router: Router
   ) {
     // v --- FORM GROUP LOGIN --- v
     this.formLogin = new FormGroup(
@@ -157,8 +160,12 @@ export class LogSignComponent implements OnInit {
   };
 
   this._logSigServ.Registrar(_usuarioObject).subscribe(
-    (data) => {
-      console.log(data);
+    (success)=>{
+      this._tokenStore.setToken(success.jwt);
+      this._router.navigate(['Index']);
+    },
+    (err)=>{
+      console.log(err)
     }
   );
 }
