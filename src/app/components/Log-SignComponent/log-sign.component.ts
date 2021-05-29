@@ -22,14 +22,11 @@ export class LogSignComponent implements OnInit {
 
   // - Strings de HTML -
   public iconHTML: string;
-  public nombreCogido: string ="";
-
-  // - Control Username -
-  public isNicknameUnique: boolean = false;
+  public nombreCogido: string = "";
 
 
   constructor(
-    private _logSigServ:LogSignService
+    private _logSigServ: LogSignService
   ) {
     // v --- FORM GROUP LOGIN --- v
     this.formLogin = new FormGroup(
@@ -54,7 +51,8 @@ export class LogSignComponent implements OnInit {
         nickname: new FormControl('', [
           Validators.required,
           Validators.minLength(8),
-          Validators.maxLength(12)
+          Validators.maxLength(12),
+          this.CheckNickname()
         ]),
         contra: new FormControl('', [
           Validators.required,
@@ -67,7 +65,7 @@ export class LogSignComponent implements OnInit {
           Validators.maxLength(12)
         ])
 
-      }, {validators:[this._testPassword()]}
+      }, { validators: [this._testPassword()] }
     );
     // ^ --- FORM GROUP REGISTRO --- ^
     this.iconHTML = "<i class='bi bi-input-cursor-text'></i>";
@@ -78,17 +76,17 @@ export class LogSignComponent implements OnInit {
   }
 
   // --- METODO TEST PASSWORD ---
-  private _testPassword():ValidatorFn{
+  private _testPassword(): ValidatorFn {
 
     return (fg: FormGroup): ValidationErrors => {
 
-      var _vContra=fg.controls['contra'].value;
-      var _vReContra=fg.controls['recontra'].value;
-  
+      var _vContra = fg.controls['contra'].value;
+      var _vReContra = fg.controls['recontra'].value;
+
       if (_vContra != _vReContra) {
-          fg.controls['recontra'].setErrors({ confirmIgualPassword: false });
+        fg.controls['recontra'].setErrors({ confirmIgualPassword: false });
       } else {
-          fg.controls['recontra'].setErrors(null);
+        fg.controls['recontra'].setErrors(null);
       }
       return null;
     }
@@ -96,70 +94,74 @@ export class LogSignComponent implements OnInit {
 
 
   // --- METODO TEST NICKNAME ---
-  public CheckNickname(){
-    if(this.formRegistro.value.nickname.length > 7 && this.formRegistro.value.nickname.length < 13){
+  // - Solo llama al servidor cuando se cumple los caracteres necesarios, para no sobrecargar -
+  // - Uso de variables para iconos y mensajes de validacion, ngIf no parece funcionar con esto -
+  public CheckNickname(): ValidatorFn {
+    return (abstractControl:AbstractControl): ValidationErrors => {
+      if(abstractControl.value.length > 7 && abstractControl.value.length < 13){
       // - Cambiamos icono a spinner, aunque no se vera -
-      this.iconHTML ="<span class='spinner-grow spinner-grow-sm text-info'></span>";
+      this.iconHTML = "<span class='spinner-grow spinner-grow-sm text-info'></span>";
 
-      this._logSigServ.CheckNickname(this.formRegistro.value.nickname).subscribe(
-            (success)=>{
-              if(success.status === 200){
-                this.isNicknameUnique= true;
-                this.nombreCogido ="";
-                this.iconHTML="<i class='bi bi-check-square-fill text-success'></i>";
-              }else{
-                this.isNicknameUnique= false;
-                this.iconHTML="<i class='bi bi-exclamation-triangle-fill text-warning'></i>";
-                this.nombreCogido ="<p class='text-warning fw-bold'>Sucedio un error</p>";
-                console.log(success);
-              }
-            },
-            (err)=>{
-              if(err.status === 400){
-                this.isNicknameUnique= false;
-                this.nombreCogido ="<p class='text-danger fw-bold'>Este nombre ya esta cogido</p>";
-                this.iconHTML="<i class='bi bi-x-square-fill text-danger'></i>";
-              }else{
-                this.isNicknameUnique= false;
-                this.iconHTML="<i class='bi bi-exclamation-triangle-fill text-warning'></i>";
-                this.nombreCogido ="<p class='text-warning fw-bold'>Sucedio un error</p>";
-                console.log(err);
-              }
-              
-            }
-          );
-    }else{
-      this.nombreCogido ="";
-      this.iconHTML="<i class='bi bi-input-cursor-text'></i>";
+      this._logSigServ.CheckNickname(abstractControl.value).subscribe(
+        (success) => {
+          if (success.status === 200) {
+            this.nombreCogido = "<p class='text-success fw-bold'>Este nombre esta disponible</p>";
+            this.iconHTML = "<i class='bi bi-check-square-fill text-success'></i>";
+            abstractControl.setErrors(null);
+          } else {
+            this.iconHTML = "<i class='bi bi-exclamation-triangle-fill text-warning'></i>";
+            this.nombreCogido = "<p class='text-warning fw-bold'>Sucedio un error</p>";
+            console.log(success);
+            abstractControl.setErrors({warning: true});
+          }
+        },
+        (err) => {
+          if (err.status === 400) {
+            this.nombreCogido = "<p class='text-danger fw-bold'>Este nombre ya esta cogido</p>";
+            this.iconHTML = "<i class='bi bi-x-square-fill text-danger'></i>";
+            abstractControl.setErrors({isUnique: false});
+          } else {
+            this.iconHTML = "<i class='bi bi-exclamation-triangle-fill text-warning'></i>";
+            this.nombreCogido = "<p class='text-warning fw-bold'>Sucedio un error, version 2</p>";
+            console.log(err);
+            abstractControl.setErrors({warning: true});
+          }
+
+        }
+      );
+    }else {
+      this.nombreCogido = "";
+      this.iconHTML = "<i class='bi bi-input-cursor-text'></i>";
+      abstractControl.setErrors(null);
+      return null;
     }
-    
-    
-    
   }
+
+}
 
 
   // --- Metodo LOGIN ---
   public nada(){
-    null;
-  }
+  null;
+}
 
 
   // --- METODO REGISTRO ---
   public Registrar(){
-    // --- Parseo del Form a Objeto ---
-    let _vForm = this.formRegistro.value;
-    
-    let _usuarioObject: IUsuario={
-      nickname: _vForm.nickname,
-      password: _vForm.contra
-    };
-    
-    this._logSigServ.Registrar(_usuarioObject).subscribe(
-      (data)=>{
-        console.log(data);
-      }
-    );
-  }
+  // --- Parseo del Form a Objeto ---
+  let _vForm = this.formRegistro.value;
+
+  let _usuarioObject: IUsuario = {
+    nickname: _vForm.nickname,
+    password: _vForm.contra
+  };
+
+  this._logSigServ.Registrar(_usuarioObject).subscribe(
+    (data) => {
+      console.log(data);
+    }
+  );
+}
   
 
 }
