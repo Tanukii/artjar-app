@@ -29,5 +29,10 @@ export class LogSignService {
     return this._http.get(`http://localhost:3000/api/CheckNickname/${_nick}`,{observe:'response'});
   }
 
+  public CheckLoged(_token:string): Observable<any>{
+    let _jwtContainer={jwt: _token};
+    return this._http.post('http://localhost:3000/api/CheckLoged/',_jwtContainer);
+  }
+
   // - Metodo LogIn -
 }
