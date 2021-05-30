@@ -22,8 +22,9 @@ export class LogSignComponent implements OnInit {
   public formRegistro: FormGroup;
 
   // - Strings de HTML -
-  public iconHTML: string;
-  public nombreCogido: string = "";
+  public IconSignIn: string;
+  public IconLogIn: string;
+  public TextSignIn: string = "";
 
 
   constructor(
@@ -71,7 +72,8 @@ export class LogSignComponent implements OnInit {
       }, { validators: [this._testPassword()] }
     );
     // ^ --- FORM GROUP REGISTRO --- ^
-    this.iconHTML = "<i class='bi bi-input-cursor-text'></i>";
+    this.IconSignIn = "<i class='bi bi-input-cursor-text'></i>";
+    this.IconLogIn = "<i class='bi bi-input-cursor-text'></i>";
   }
 
   // --- METODO ON INIT ---
@@ -103,29 +105,29 @@ export class LogSignComponent implements OnInit {
     return (abstractControl:AbstractControl): ValidationErrors => {
       if(abstractControl.value.length > 7 && abstractControl.value.length < 13){
       // - Cambiamos icono a spinner, aunque no se vera -
-      this.iconHTML = "<span class='spinner-grow spinner-grow-sm text-info'></span>";
+      this.IconSignIn = "<span class='spinner-grow spinner-grow-sm text-info'></span>";
 
       this._logSigServ.CheckNickname(abstractControl.value).subscribe(
         (success) => {
           if (success.status === 200) {
-            this.nombreCogido = "<p class='text-success fw-bold'>Este nombre esta disponible</p>";
-            this.iconHTML = "<i class='bi bi-check-square-fill text-success'></i>";
+            this.TextSignIn = "<p class='text-success fw-bold'>Este nombre esta disponible</p>";
+            this.IconSignIn = "<i class='bi bi-check-square-fill text-success'></i>";
             abstractControl.setErrors(null);
           } else {
-            this.iconHTML = "<i class='bi bi-exclamation-triangle-fill text-warning'></i>";
-            this.nombreCogido = "<p class='text-warning fw-bold'>Sucedio un error</p>";
+            this.IconSignIn = "<i class='bi bi-exclamation-triangle-fill text-warning'></i>";
+            this.TextSignIn = "<p class='text-warning fw-bold'>Sucedio un error</p>";
             console.log(success);
             abstractControl.setErrors({warning: true});
           }
         },
         (err) => {
           if (err.status === 400) {
-            this.nombreCogido = "<p class='text-danger fw-bold'>Este nombre ya esta cogido</p>";
-            this.iconHTML = "<i class='bi bi-x-square-fill text-danger'></i>";
+            this.TextSignIn = "<p class='text-danger fw-bold'>Este nombre ya esta cogido</p>";
+            this.IconSignIn = "<i class='bi bi-x-square-fill text-danger'></i>";
             abstractControl.setErrors({isUnique: false});
           } else {
-            this.iconHTML = "<i class='bi bi-exclamation-triangle-fill text-warning'></i>";
-            this.nombreCogido = "<p class='text-warning fw-bold'>Sucedio un error, version 2</p>";
+            this.IconSignIn = "<i class='bi bi-exclamation-triangle-fill text-warning'></i>";
+            this.TextSignIn = "<p class='text-warning fw-bold'>Sucedio un error, version 2</p>";
             console.log(err);
             abstractControl.setErrors({warning: true});
           }
@@ -133,8 +135,8 @@ export class LogSignComponent implements OnInit {
         }
       );
     }else {
-      this.nombreCogido = "";
-      this.iconHTML = "<i class='bi bi-input-cursor-text'></i>";
+      this.TextSignIn = "";
+      this.IconSignIn = "<i class='bi bi-input-cursor-text'></i>";
       abstractControl.setErrors(null);
       return null;
     }
@@ -144,8 +146,33 @@ export class LogSignComponent implements OnInit {
 
 
   // --- Metodo LOGIN ---
-  public nada(){
-  null;
+  public Login(){
+    let _vForm = this.formLogin.value;
+    let _usuarioObject: IUsuario = {
+      nickname: _vForm.nickname,
+      password: _vForm.contra
+    };
+
+    this._logSigServ.LogIn(_usuarioObject).subscribe(
+      (success)=>{
+        if (success.status === 200) {
+          this._tokenStore.setTokenFromREST(success.body);
+          this._router.navigate(['Index']);
+        } else {
+          this.IconSignIn = "<i class='bi bi-exclamation-triangle-fill text-warning'></i>";
+          console.log(success);
+        }
+        
+      },
+      (err)=>{
+        if (err.status === 400) {
+          this.IconLogIn = "<i class='bi bi-x-square-fill text-danger'></i>";
+        } else {
+          this.IconLogIn = "<i class='bi bi-exclamation-triangle-fill text-warning'></i>";
+          console.log(err);
+        }
+      }
+    );
 }
 
 

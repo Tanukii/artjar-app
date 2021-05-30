@@ -35,4 +35,7 @@ export class LogSignService {
   }
 
   // - Metodo LogIn -
+  public LogIn(_logUser:IUsuario): Observable<any>{
+    return this._http.post('http://localhost:3000/api/Login/',_logUser,{observe:'response'});
+  }
 }

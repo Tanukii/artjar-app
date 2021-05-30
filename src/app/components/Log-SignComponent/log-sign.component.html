@@ -17,7 +17,7 @@
                                     aria-labelledby="headingOne" data-bs-parent="#accordionExample">
                                     <div class="accordion-body">
                                         <!-- INICIO FORMULARIO LogIn -->
-                                        <form [formGroup]="formLogin" (ngSubmit)="nada()">
+                                        <form [formGroup]="formLogin" (ngSubmit)="Login()">
                                             <div class="form-row d-flex justify-content-center my-2">
                                                 <div class="form-group col-6">
                                                     <label for="nickname">
@@ -25,12 +25,16 @@
                                                             Usuario
                                                         </strong>
                                                     </label>
-                                                    <input type="text" formControlName="nickname" class="form-control"
+                                                    <div class="input-group">
+                                                        <input type="text" formControlName="nickname" class="form-control"
                                                         id="nickname" placeholder="escribe aqui tu nick...">
-                                                    <span class="text-danger"
-                                                        *ngIf="! formLogin.controls['nickname'].pristine &&  formLogin.controls['nickname'].errors?.required">
-                                                        el campo es obligatorio
-                                                    </span>
+                                                        <span class="input-group-text" [innerHtml]="IconLogIn"></span>
+                                                    </div>
+                                                    
+                                                    <p class="text-danger fw-bold"
+                                                        *ngIf="!formLogin.controls['nickname'].pristine &&  formLogin.controls['nickname'].errors?.required">
+                                                        Campo Obligatorio
+                                                    </p>
                                                 </div>
                                             </div>
 
@@ -84,7 +88,7 @@
                                                             class="form-control" id="nickname"
                                                             placeholder="escribe aqui tu nick..."
                                                             (blur)="CheckNickname()">
-                                                        <span class="input-group-text" [innerHtml]="iconHTML"></span>
+                                                        <span class="input-group-text" [innerHtml]="IconSignIn"></span>
                                                     </div>
 
                                                     <p class="text-danger fw-bold"
@@ -95,7 +99,7 @@
                                                         *ngIf="!formRegistro.controls['nickname'].pristine && formRegistro.controls['nickname'].errors?.minlength !== null && formRegistro.controls['nickname'].errors?.maxlength !== null">
                                                         Nickname solo puede ser entre 8 y 12 caracteres
                                                     </p>
-                                                    <div [innerHtml]="nombreCogido">
+                                                    <div [innerHtml]="TextSignIn">
 
                                                     </div>
                                                 </div>
