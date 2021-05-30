@@ -28,6 +28,9 @@ export class GeneralGuard implements CanActivate {
       if(_boolTest.res){
         return true;
       } else {
+        if(_boolTest.exp){
+          this._tokenStore.setTokenFromREST(null);
+        }
         this._router.navigate(['LoginRegistro']);
       }
       
