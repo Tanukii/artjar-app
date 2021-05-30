@@ -1,38 +1,80 @@
 // --- IMPORT COMPONENTES ---
-import { Injectable, OnDestroy } from '@angular/core';
-import { BehaviorSubject } from 'rxjs';
+import { Injectable } from '@angular/core';
+import { BehaviorSubject, Observable } from 'rxjs';
+
+// - Import Interface -
+import { IToken } from 'src/app/models/tokenModel';
 
 @Injectable({
   providedIn: 'root'
 })
 
 // - Servicio para contener el JWT devuelto por el servidor
-export class SessionVarService implements OnDestroy {
+export class SessionVarService {
 
-  // - El token lo consultamos bajo demanda sin tener que retransmitir a otros componentes, teoricamente no hay necesidad de observable -
-  // - Solo que delegarlo a un servicio mantenga persistencia
+  // - Vars de control para partes estaticas del token -
+  private _userVarSubject: BehaviorSubject<Object>=new BehaviorSubject<Object>({});
+  private _userVar:Object;
+
+  // - Vars de control para  partes dnamicas del token (Primariamente los "Exposure Bucks") -
+  private _exposureVarSubject: BehaviorSubject<Object>=new BehaviorSubject<Object>({});
+  private _exposureVar:Object;
+
+  // - Var para JWT -
   private _jwtVarSubject: BehaviorSubject<string>=new BehaviorSubject<string>('');
   private _jwtVar:string;
 
   constructor() {
+    this._userVarSubject.subscribe( (_subjectContent:Object)=>_subjectContent=this._userVar );
+    this._exposureVarSubject.subscribe( (_subjectContent:Object)=>_subjectContent=this._exposureVar );
     this._jwtVarSubject.subscribe( (_subjectContent:string)=>_subjectContent=this._jwtVar );
   }
 
-  ngOnDestroy(){
-    console.log('El objeto de destruye');
-  }
+  // - Metodo para cargar variables con la respuesta de la Api -
+  public setTokenFromREST(_restToken: IToken){
 
-  public getToken():string{
-    console.log('Se pide Token con valor ', this._jwtVarSubject.getValue());
-    return this._jwtVarSubject.getValue();
-    // console.log('Se pide Token con valor ', this._jwtVar);
-    // return this._jwtVar;
-  }
+    // - Carga UserVar -
+    this._userVar = {
+      idUser: _restToken.userData.idUser,
+      nickname: _restToken.userData.nickname,
+      tier: _restToken.userData.tier
+    };
+    this._userVarSubject.next(this._userVar);
 
-  public setToken(_token:string){
-    this._jwtVar = _token;
+    // - Carga ExposureVar -
+    this._exposureVar = {
+      exBucks: _restToken.userData.exBucks
+    };
+    this._exposureVarSubject.next(this._exposureVar);
+
+    // - Carga JwtVar -
+    this._jwtVar = _restToken.jwt;
     this._jwtVarSubject.next(this._jwtVar);
-    console.log('Se mete token con valor ', this._jwtVarSubject.getValue());
-    // console.log('Se mete token con valor ', this._jwtVar);
+
   }
+
+  // - Get JWT -
+  public getJwt():string{
+    return this._jwtVarSubject.getValue();
+  }
+
+  // - Get User -
+  public getUser():Object{
+    return this._userVarSubject.getValue();
+  }
+
+  // - Get Exposure Bucks -
+  public getExBucks():Observable<Object>{
+    return this._exposureVarSubject.asObservable();
+  }
+
+  // - Set Exposure Bucks, Va a cambiar puesto que es la unidad monetaria -
+  public setExBucks(_exB:number){
+    this._exposureVar = {
+      exBucks: _exB
+    };
+    this._exposureVarSubject.next(this._exposureVar);
+  }
+
+  
 }

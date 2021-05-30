@@ -24,13 +24,12 @@ export class GeneralGuard implements CanActivate {
   canActivate(
     route: ActivatedRouteSnapshot,
     state: RouterStateSnapshot): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {
-      let _content = this._tokenStore.getToken();
+      let _content = this._tokenStore.getJwt();
       if(_content){
         console.log(_content);
         return true;
       } else {
-        console.log(_content);
-        //this._router.navigate(['LoginRegistro']);
+        this._router.navigate(['LoginRegistro']);
         return false;
       }
       

@@ -161,7 +161,8 @@ export class LogSignComponent implements OnInit {
 
   this._logSigServ.Registrar(_usuarioObject).subscribe(
     (success)=>{
-      this._tokenStore.setToken(success.jwt);
+      console.log(success);
+      this._tokenStore.setTokenFromREST(success);
       this._router.navigate(['Index']);
     },
     (err)=>{
