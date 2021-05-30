@@ -21,16 +21,14 @@ export class GeneralGuard implements CanActivate {
 
   }
 
-  canActivate(
+  async canActivate(
     route: ActivatedRouteSnapshot,
-    state: RouterStateSnapshot): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {
-      let _content = this._tokenStore.getJwt();
-      if(_content){
-        console.log(_content);
+    state: RouterStateSnapshot): Promise<boolean | UrlTree> {
+      let _boolTest = await this._logSigServ.CheckLoged(this._tokenStore.getJwt()).toPromise();
+      if(_boolTest.res){
         return true;
       } else {
         this._router.navigate(['LoginRegistro']);
-        return false;
       }
       
   }
