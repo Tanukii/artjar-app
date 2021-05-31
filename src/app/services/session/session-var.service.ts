@@ -24,16 +24,21 @@ export class SessionVarService {
   private _jwtVarSubject: BehaviorSubject<string>=new BehaviorSubject<string>('');
   private _jwtVar:string;
 
+  // - Var para STATUS -
+  private _statusVarSubject: BehaviorSubject<boolean>=new BehaviorSubject<boolean>(false);
+  //private _statusVar:boolean;
+
   constructor() {
     this._userVarSubject.subscribe( (_subjectContent:Object)=>_subjectContent=this._userVar );
     this._exposureVarSubject.subscribe( (_subjectContent:Object)=>_subjectContent=this._exposureVar );
     this._jwtVarSubject.subscribe( (_subjectContent:string)=>_subjectContent=this._jwtVar );
+    //this._statusVarSubject.subscribe( (_subjectContent:boolean)=>_subjectContent=this._statusVar );
   }
 
   // - Metodo para cargar variables con la respuesta de la Api -
   public setTokenFromREST(_restToken: IToken){
-
-    // - Carga UserVar -
+    if(_restToken !== null){
+      // - Carga UserVar -
     this._userVar = {
       idUser: _restToken.userData.idUser,
       nickname: _restToken.userData.nickname,
@@ -50,6 +55,11 @@ export class SessionVarService {
     // - Carga JwtVar -
     this._jwtVar = _restToken.jwt;
     this._jwtVarSubject.next(this._jwtVar);
+    }
+    
+
+    // - Carga Status -
+    _restToken !== null ? this._setStatus(true) : this._setStatus(false);
 
   }
 
@@ -74,6 +84,16 @@ export class SessionVarService {
       exBucks: _exB
     };
     this._exposureVarSubject.next(this._exposureVar);
+  }
+
+  // - Get Status, para saber si se ha cargado la variable o no -
+  public getStatus():Observable<boolean>{
+    return this._statusVarSubject.asObservable();
+  }
+
+  // - Set Status para uso interno del servicio -
+  private _setStatus(_status:boolean){
+    _status ? this._statusVarSubject.next(true) : this._statusVarSubject.next(false);
   }
 
   

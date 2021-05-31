@@ -13,11 +13,17 @@
       <div class="col-2 min-vh-100 bg-dark">
         <span class="h1 text-light">ArtJar</span>
         <div class="list-group">
-          <a [routerLink]="['/LoginRegistro']" routerLinkActive="router-link-active" class="list-group-item list-group-item-action">Login/Registro</a>
+          <div *ngIf="!_statusIs">
+            <a [routerLink]="['/LoginRegistro']" routerLinkActive="router-link-active" class="list-group-item list-group-item-action">Login/Registro</a>
+          </div>
+          
           <a [routerLink]="['/GuardTest']" routerLinkActive="router-link-active" class="list-group-item list-group-item-action">GuardTest</a>
           <a href="#" class="list-group-item list-group-item-action">A third link item</a>
           <a href="#" class="list-group-item list-group-item-action">A fourth link item</a>
           <a href="#" class="list-group-item list-group-item-action disabled" tabindex="-1" aria-disabled="true">A disabled link item</a>
+          <div *ngIf="_statusIs">
+            <a (click)="LogOut()" class="list-group-item list-group-item-action">Logout</a>
+          </div>
         </div>
       </div>
       <div class="col-10">
