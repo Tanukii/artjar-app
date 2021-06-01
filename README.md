@@ -1,27 +1,16 @@
 # ArtjarApp
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 11.0.2.
+App principal de ArtJar para uso del cliente
 
-## Development server
+Componente del Registro/Login
+-----------------------------
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
+    Ambos formularios se condensan en un unico componente, tienen la capacidad de que dependiendo de la
+    respuesta del servidor informar de algun error o problema en la peticion mediante iconos 
+    y en el caso del formulario de registro texto adicional para informar de si el Nombre de Usuario
+    escogido ya esta en uso.
 
-## Code scaffolding
-
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
-
-## Build
-
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory. Use the `--prod` flag for a production build.
-
-## Running unit tests
-
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
-
-## Running end-to-end tests
-
-Run `ng e2e` to execute the end-to-end tests via [Protractor](http://www.protractortest.org/).
-
-## Further help
-
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.io/cli) page.
+    La variable de registro recibida como respuesta a estos formularios es recogida por "LogSign.service"
+    quien se encarga de cargarla en multiples Subjects dependiendo si se trata de informacion estatica
+    o dinamica que requiera de un Observable para accederla. Tambien contiene informacion de si hay
+    un usuario con sesion iniciada

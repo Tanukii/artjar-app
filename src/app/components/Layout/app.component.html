@@ -16,12 +16,9 @@
           <div *ngIf="!_statusIs">
             <a [routerLink]="['/LoginRegistro']" routerLinkActive="router-link-active" class="list-group-item list-group-item-action">Login/Registro</a>
           </div>
-          
-          <a [routerLink]="['/GuardTest']" routerLinkActive="router-link-active" class="list-group-item list-group-item-action">GuardTest</a>
-          <a href="#" class="list-group-item list-group-item-action">A third link item</a>
-          <a href="#" class="list-group-item list-group-item-action">A fourth link item</a>
-          <a href="#" class="list-group-item list-group-item-action disabled" tabindex="-1" aria-disabled="true">A disabled link item</a>
+            
           <div *ngIf="_statusIs">
+            <a [routerLink]="['/subirImagenes']" routerLinkActive="router-link-active" class="list-group-item list-group-item-action">Subir Imagenes</a>
             <a (click)="LogOut()" class="list-group-item list-group-item-action">Logout</a>
           </div>
         </div>

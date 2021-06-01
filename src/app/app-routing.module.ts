@@ -2,10 +2,10 @@ import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 
 // --- IMPORTACION DE COMPONENTES ---
-import { IndexComponentComponent } from 'src/app/components/IndexComponent/index-component.component';
+import { IndexComponent } from 'src/app/components/IndexComponent/index-component.component';
 import { LogSignComponent } from 'src/app/components/Log-SignComponent/log-sign.component';
-import { GuardTestComponent } from 'src/app/components/guard-test/guard-test.component';
 import { Error404Component } from 'src/app/components/error404/error404.component';
+import { SubirImagenesComponent } from 'src/app/components/subir-imagenes-component/subir-imagenes-component.component';
 
 // --- Importacion Guard ---
 import { GeneralGuard } from 'src/app/services/guard/general.guard';
@@ -16,13 +16,13 @@ const routes: Routes = [
   { path: '', redirectTo: 'Index', pathMatch: 'full'},
 
   // - Ruta a Index -
-  { path:'Index', component: IndexComponentComponent },
+  { path:'Index', component: IndexComponent },
 
   // - Ruta a Login y Registro -
   { path:'LoginRegistro', component: LogSignComponent },
 
-  // - Ruta GuardTest -
-  { path:'GuardTest',canActivate: [GeneralGuard], component: GuardTestComponent},
+  // - Ruta Subida de imagenes -
+  { path:'subirImagenes',canActivate: [GeneralGuard], component: SubirImagenesComponent},
 
   // - Ruta de error -
   { path:'**', component: Error404Component}

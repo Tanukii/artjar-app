@@ -5,24 +5,25 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './components/Layout/app.component';
-import { IndexComponentComponent } from './components/IndexComponent/index-component.component';
+import { IndexComponent } from './components/IndexComponent/index-component.component';
 import { LogSignComponent } from './components/Log-SignComponent/log-sign.component';
 import { Error404Component } from './components/error404/error404.component';
-import { GuardTestComponent } from './components/guard-test/guard-test.component';
 
 // --- Servicios a Inyectar ---
 import { LogSignService } from './services/http/LogSign.service';
 import { SessionVarService } from './services/session/session-var.service';
 import { GeneralGuard } from 'src/app/services/guard/general.guard';
+import { SubirImagenesComponent } from './components/subir-imagenes-component/subir-imagenes-component.component';
 
 
 @NgModule({
   declarations: [
     AppComponent,
-    IndexComponentComponent,
+    IndexComponent,
     LogSignComponent,
     Error404Component,
-    GuardTestComponent
+    SubirImagenesComponent,
+    SubirImagenesComponent
   ],
   imports: [
     BrowserModule,
