@@ -4,29 +4,47 @@
             <div class="container">
                 <div class="row">
                     <div class="col">
-
                         <!-- INICIO FORMULARIO LogIn -->
-                        <form >
+                        <form [formGroup]="formImg" (ngSubmit)="suibirImagen()">
                             <!--
                                 Campo fichero,
                                 Cantidad necesaria para desbloquear
                                 Boton de subida
                             -->
-                            <input type="file" accept="image/png, image/jpeg, image/jpg" id="imgInput"
-                                name="img"  />
-                            <div class="form-row d-flex justify-content-center my-2">
+                            <div
+                                class="form-row d-flex justify-content-center my-2 align-items-center align-self-center">
+
                                 <div class="form-group col-6">
-                                    <label for="contra">
+                                    <label for="imgInput">
                                         <strong>
-                                            Contraseña
+                                            Imagen
                                         </strong>
                                     </label>
-                                    <input type="password" formControlName="contra" class="form-control" id="contra"
-                                        placeholder="escribe tu password...">
+                                    <input type="file" class="form-control" formControlName="imgInput" #InputImgTag (change)="cargaFichero(InputImgTag)" accept="image/png, image/jpeg, image/jpg" id="imgInput"
+                                        multiple="false" />
                                 </div>
+                            </div>
+
+                            <div
+                                class="form-row d-flex justify-content-center my-2 align-items-center align-self-center">
+                                <div class="form-group col-6">
+                                    <label for="precio">
+                                        <strong>
+                                            Precio
+                                        </strong>
+                                    </label>
+                                    <input type="number" formControlName="precioInput" class="form-control" id="precioInput" min="1">
+                                </div>
+                            </div>
+
+                            <div class="form-row d-flex justify-content-center my-2">
+                                <button type="submit" class="btn btn-primary" [disabled]="formImg.status!=='VALID'">
+                                    Subir
+                                </button>
                             </div>
                         </form>
                         <!-- FIN FORMULARIO LogIn -->
+
                     </div>
                 </div>
             </div>
