@@ -22,7 +22,8 @@ const routes: Routes = [
   { path:'LoginRegistro', component: LogSignComponent },
 
   // - Ruta Subida de imagenes -
-  { path:'subirImagenes',canActivate: [GeneralGuard], component: SubirImagenesComponent},
+  //{ path:'subirImagenes',canActivate: [GeneralGuard], component: SubirImagenesComponent},
+  { path:'subirImagenes', component: SubirImagenesComponent},
 
   // - Ruta de error -
   { path:'**', component: Error404Component}

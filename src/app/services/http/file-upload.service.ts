@@ -20,7 +20,7 @@ export class FileUploadService {
   // --- METODOS DEL SERVICIO ---
 
   // - Metodo de Registro -
-  public SubirFicheros(_ficheros): Observable<any>{
-    return this._http.post('http://localhost:3000/api/Registro',_ficheros,{ reportProgress:true, observe: 'events' });
+  public SubirFicheros(_ficheros:any): Observable<any>{
+    return this._http.post('http://localhost:3000/api/subirImagen',_ficheros,{observe:'response'});
   }
 }

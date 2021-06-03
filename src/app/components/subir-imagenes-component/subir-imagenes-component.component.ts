@@ -45,10 +45,26 @@ export class SubirImagenesComponent implements OnInit {
     this._fileVar = InputImgTag.files[0] as File;
   }
 
-  public suibirImagen(){
-    console.log(this.formImg.value)
-    console.log(this._fileVar);
-    //this._fileUpload.SubirFicheros();
+  public async suibirImagen(){
+    console.log('Subiendo Imagen');
+    let formData = new FormData();
+    formData.append('foto', this._fileVar,'MiFoto.jpg');
+    formData.append('precio',this.formImg.value.precioInput as string);
+
+    this._fileUpload.SubirFicheros(formData).subscribe(
+      (success)=>{
+      if (success.status === 200) {
+        this._router.navigate(['Index']);
+      } else {
+        console.log(success);
+      }
+      
+    },
+    (err)=>{
+      if (err.status === 400) {
+        console.log(err);
+      }
+    });
   }
 
 
