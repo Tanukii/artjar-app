@@ -71,8 +71,9 @@ export class SubirImagenesComponent implements OnInit {
       
     },
     (err)=>{
+      console.log(err);
       if (err.status === 400) {
-        if(err.body.exp){
+        if(err.error.exp){
           // - Token expirado, retornar a Login/Registro -
           this._tokenStore.setTokenFromREST(null);
           this._router.navigate(['LoginRegistro']);
