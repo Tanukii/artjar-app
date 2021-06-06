@@ -3,7 +3,7 @@
   <div class="d-sm-block d-md-none">
     <div class="card">
       <div class="card-body">
-        <p class="card-text">Solo Pantallas Moviles</p>
+        <p class="card-text">Aumente el tamaño de la ventana</p>
       </div>
     </div>
   </div>
@@ -11,8 +11,20 @@
   <div class="d-none d-md-block">
     <div class="row">
       <div class="col-2 min-vh-100 bg-dark">
+        <!-- Columna de navegacion -->
+
         <span class="h1 text-light">ArtJar</span>
-        <div class="list-group">
+
+        <div id="userData" *ngIf="_statusIs" class="my-2">
+          <ul class="list-group">
+            <li class="list-group-item">Usuario: {{_usrIs.nickname }}</li>
+            <li class="list-group-item">Tier: {{_usrIs.tier }}</li>
+            <li class="list-group-item">Saldo: {{_saldoIs.exBucks }}</li>
+          </ul>
+        </div>
+        
+
+        <div class="list-group my-2">
           <div *ngIf="!_statusIs">
             <a [routerLink]="['/LoginRegistro']" routerLinkActive="router-link-active" class="list-group-item list-group-item-action">Login/Registro</a>
           </div>
@@ -22,8 +34,10 @@
             <a (click)="LogOut()" class="list-group-item list-group-item-action">Logout</a>
           </div>
         </div>
+
       </div>
       <div class="col-10">
+        <!-- Columna contenedor -->
         <router-outlet></router-outlet>
       </div>
     </div>

@@ -69,8 +69,8 @@ export class SessionVarService {
   }
 
   // - Get User -
-  public getUser():Object{
-    return this._userVarSubject.getValue();
+  public getUser():Observable<Object>{
+    return this._userVarSubject.asObservable();
   }
 
   // - Get Exposure Bucks -
