@@ -127,7 +127,7 @@ export class LogSignComponent implements OnInit {
             abstractControl.setErrors({isUnique: false});
           } else {
             this.IconSignIn = "<i class='bi bi-exclamation-triangle-fill text-warning'></i>";
-            this.TextSignIn = "<p class='text-warning fw-bold'>Sucedio un error, version 2</p>";
+            this.TextSignIn = "<p class='text-warning fw-bold'>Sucedio un error</p>";
             console.log(err);
             abstractControl.setErrors({warning: true});
           }
@@ -147,6 +147,7 @@ export class LogSignComponent implements OnInit {
 
   // --- Metodo LOGIN ---
   public Login(){
+    this.IconLogIn = "<span class='spinner-grow spinner-grow-sm text-info'></span>";
     let _vForm = this.formLogin.value;
     let _usuarioObject: IUsuario = {
       nickname: _vForm.nickname,

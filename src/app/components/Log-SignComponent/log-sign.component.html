@@ -86,8 +86,7 @@
 
                                                         <input type="text" formControlName="nickname"
                                                             class="form-control" id="nickname"
-                                                            placeholder="escribe aqui tu nick..."
-                                                            (blur)="CheckNickname()">
+                                                            placeholder="escribe aqui tu nick...">
                                                         <span class="input-group-text" [innerHtml]="IconSignIn"></span>
                                                     </div>
 
@@ -119,6 +118,10 @@
                                                         *ngIf="!formRegistro.controls['contra'].pristine &&  formRegistro.controls['contra'].errors?.required">
                                                         Campo Obligatorio
                                                     </span>
+                                                    <span class="text-danger fw-bold"
+                                                        *ngIf="!formRegistro.controls['contra'].pristine &&  formRegistro.controls['contra'].errors?.minlength || formRegistro.controls['contra'].errors?.maxlength">
+                                                        La contraseña debe tener entre 8 y 12 caracteres
+                                                    </span>
 
                                                 </div>
                                             </div>
@@ -133,6 +136,10 @@
                                                     <input type="password" formControlName="recontra"
                                                         class="form-control" id="recontra"
                                                         placeholder="escribe tu password...">
+                                                        <span class="text-danger fw-bold"
+                                                        *ngIf="!formRegistro.controls['recontra'].pristine &&  formRegistro.controls['recontra'].errors">
+                                                        La contraseña no coincide
+                                                    </span>
                                                 </div>
                                             </div>
 

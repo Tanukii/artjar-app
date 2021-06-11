@@ -23,7 +23,6 @@ const routes: Routes = [
 
   // - Ruta Subida de imagenes -
   { path:'subirImagenes',canActivate: [GeneralGuard], component: SubirImagenesComponent},
-  //{ path:'subirImagenes', component: SubirImagenesComponent},
 
   // - Ruta de error -
   { path:'**', component: Error404Component}
